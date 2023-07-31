@@ -1,1 +1,14 @@
+#Tarea 1
+#DISEÑE UN ALGORITMO QUE MULTIPLIQUE DOS NUMEROS SIN UTILIZAR EL OPERADOR *
 
+#Solucion: 
+
+def multiplicar_dos_numeros(n1, n2):
+    resultado = 0
+    for i in range(n2):
+        resultado += n1
+    return resultado
+
+n1 = int(input("digite primer numero"))
+n2 = int(input("digite segundo numero"))
+print("la multiplicacion", n1, "x", n2, "es:", multiplicar_dos_numeros(n1, n2)
