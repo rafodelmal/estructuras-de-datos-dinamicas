@@ -1,2 +1,43 @@
 #TAREA 2
 EN PYTHON SUMAR DOS ENTEROS A SU MAXIMO VALOR
+
+#Opcion 1
+
+
+import sys
+
+def main():
+    maximo_entero = sys.maxsize
+    maximo_doble = sys.float_info.max
+
+    print("El valor máximo de (int) es:", maximo_entero)
+    print("El valor máximo de (doble) es:", maximo_doble)
+
+    suma_enteros = maximo_entero + maximo_entero
+    suma_doble = maximo_doble + maximo_doble
+
+    mensaje = f"La suma de los valores máximos de (int) es: {suma_enteros}\n" \
+              f"La suma de los valores máximos de (doble) es: {suma_doble}"
+    print(mensaje)
+
+
+if __name__ == "__main__":
+    main()
+
+
+
+#Opcion 2
+
+def suma_dos_enteros_a_maximo_valor():
+    try:
+        entero1 = int(input("Ingresa el primer entero: "))
+        entero2 = int(input("Ingresa el segundo entero: "))
+        max_valor = max(entero1, entero2)
+        suma = 2 * max_valor
+        return suma
+    except ValueError:
+        print("¡Error! Debes ingresar números enteros válidos.")
+
+# Ejemplo de uso
+resultado = suma_dos_enteros_a_maximo_valor()
+print("El resultado es:", resultado)
