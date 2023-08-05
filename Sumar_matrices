@@ -1,0 +1,92 @@
+#TAREA DE BONIFICACION
+#SUMAR DOS MATRICES NO CUADRATICAS CON RECURSIVIDAD EN C#
+
+#solucion
+####################################
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Ingrese el número de filas de las matrices: ");
+        int filas = int.Parse(Console.ReadLine());
+
+        Console.Write("Ingrese el número de columnas de las matrices: ");
+        int columnas = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("Ingrese los elementos de la Matriz A:");
+        int[,] matrizA = LeerMatriz(filas, columnas);
+
+        Console.WriteLine("Ingrese los elementos de la Matriz B:");
+        int[,] matrizB = LeerMatriz(filas, columnas);
+
+        int[,] matrizSuma = SumarMatricesNoCuadraticas(matrizA, matrizB);
+
+        Console.WriteLine("Matriz A:");
+        ImprimirMatriz(matrizA);
+
+        Console.WriteLine("Matriz B:");
+        ImprimirMatriz(matrizB);
+
+        Console.WriteLine("Resultado de la suma:");
+        ImprimirMatriz(matrizSuma);
+    }
+
+    static int[,] LeerMatriz(int filas, int columnas)
+    {
+        int[,] matriz = new int[filas, columnas];
+        for (int i = 0; i < filas; i++)
+        {
+            for (int j = 0; j < columnas; j++)
+            {
+                Console.Write($"Ingrese el valor para la posición [{i}, {j}]: ");
+                matriz[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+        return matriz;
+    }
+
+    static int[,] SumarMatricesNoCuadraticas(int[,] matrizA, int[,] matrizB)
+    {
+        if (matrizA.GetLength(0) != matrizB.GetLength(0) || matrizA.GetLength(1) != matrizB.GetLength(1))
+            throw new ArgumentException("Las matrices deben tener la misma dimensión para poder sumarlas.");
+
+        int filas = matrizA.GetLength(0);
+        int columnas = matrizA.GetLength(1);
+        int[,] resultado = new int[filas, columnas];
+
+        SumarMatricesRecursivamente(matrizA, matrizB, resultado, 0, 0, filas, columnas);
+
+        return resultado;
+    }
+
+    static void SumarMatricesRecursivamente(int[,] matrizA, int[,] matrizB, int[,] resultado, int fila, int columna, int filas, int columnas)
+    {
+        if (fila == filas)
+            return;
+
+        resultado[fila, columna] = matrizA[fila, columna] + matrizB[fila, columna];
+
+        columna++;
+        if (columna == columnas)
+        {
+            columna = 0;
+            fila++;
+        }
+
+        SumarMatricesRecursivamente(matrizA, matrizB, resultado, fila, columna, filas, columnas);
+    }
+
+    static void ImprimirMatriz(int[,] matriz)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                Console.Write(matriz[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+}
