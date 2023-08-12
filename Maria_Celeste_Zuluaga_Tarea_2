@@ -1,0 +1,40 @@
+public class MATRIZ {
+    
+    public static int[][] SumMatRecursion(int[][] m1, int[][] m2, int fil, int col) {
+        int[][] resultado = new int[fil][col];
+        SumMatRecursion(m1, m2, 0, 0, fil, col, resultado);
+        return resultado;
+    }
+    
+    private static void SumMatRecursion(int[][] m1, int[][] m2, int row, int col, int fil, int colu, int[][] resultado) {
+        if (row >= fil || col >= colu) {
+            return; // Salgo de la recursión cuando llegamos al final de las filas o columnas
+        }
+        
+        resultado[row][col] = m1[row][col] + m2[row][col];
+        
+        // Llamada recursiva para la siguiente posición
+        if (col + 1 < colu) {
+            SumMatRecursion(m1, m2, row, col + 1, fil, colu, resultado);
+        } else if (row + 1 < fil) {
+            SumMatRecursion(m1, m2, row + 1, 0, fil, colu, resultado);
+        }
+    }
+    
+    public static void main(String[] args) {
+        int[][] matriz1 = {{1, 2, 3}, {4, 5, 6}};
+        int[][] matriz2 = {{7, 8, 9}, {10, 11, 12}};
+        
+        int filas = matriz1.length;
+        int columnas = matriz1[0].length;
+        
+        int[][] resultado = SumMatRecursion(matriz1, matriz2, filas, columnas);
+        
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                System.out.print(resultado[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
