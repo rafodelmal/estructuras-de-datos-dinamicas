@@ -1,0 +1,5 @@
+Ejercicio 1
+
+retorno nombreMetodo(Parametros parametro)
+ codigo...
+end nombreMetodo
