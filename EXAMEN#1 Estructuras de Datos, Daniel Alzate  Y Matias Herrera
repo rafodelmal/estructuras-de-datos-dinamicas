@@ -1,0 +1,183 @@
+EXAMEN - Equipo: Matías Herrera Vanegas - Daniel Alzate Arias GRUPO #63
+
+1.Dado un número n, necesitamos imprimir todos los números
+binarios de n dígitos con la misma suma en las mitades izquierda y
+derecha. Si n es impar, entonces el elemento medio puede ser 0 o 1
+Caso 1
+Entrada: n = 4
+Salida: 0000 0101 0110 1001 1010 1111
+Caso 2
+Entrada: n = 5
+Salida: 00000 0100 01001 01101 01010 01110 10001 10101 10010 10110 11011 11111
+
+SOLUCION:
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static bool numeroEsImpar;
+
+    static void Main(string[] args)
+    {
+        Console.Write("Ingrese el número n: ");
+        string numero = Console.ReadLine();
+        long numeroLong = Convert.ToInt64(numero);
+        numeroEsImpar = numeroLong % 2 != 0;
+
+        List<string> combinacionesDelNumeroEnBinario = new List<string>();
+        List<string> combinacionesQueCumplen = new List<string>();
+
+        GenerarCombinacionesBinarias(numeroLong, "", combinacionesDelNumeroEnBinario);
+        ObtenerCombinacionesQueCumplen(combinacionesDelNumeroEnBinario, combinacionesQueCumplen);
+        ImprimirResultados(combinacionesDelNumeroEnBinario, combinacionesQueCumplen);
+
+        Console.ReadLine();
+    }
+
+    static void GenerarCombinacionesBinarias(long cantidadBinariosActual, string combinacionActual, List<string> combinaciones)
+    {
+        if (cantidadBinariosActual == 0)
+        {
+            combinaciones.Add(combinacionActual);
+        }
+        else
+        {
+            GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "0", combinaciones);
+            GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "1", combinaciones);
+        }
+    }
+
+    static void ObtenerCombinacionesQueCumplen(List<string> combinacionesDelNumeroEnBinario, List<string> combinacionesQueCumplen)
+    {
+        foreach (string combinacion in combinacionesDelNumeroEnBinario)
+        {
+            int mitadNumero = combinacion.Length / 2;
+
+            string primeraMitadBinario = combinacion.Substring(0, mitadNumero);
+            string segundaMitadBinario = combinacion.Substring((numeroEsImpar) ? mitadNumero + 1 : mitadNumero);
+
+            int sumatoriaPrimeraMitad = CalcularSumatoriaDeLaMitadDeUnBinario(primeraMitadBinario);
+            int sumatoriaSegundaMitad = CalcularSumatoriaDeLaMitadDeUnBinario(segundaMitadBinario);
+
+            if (sumatoriaPrimeraMitad == sumatoriaSegundaMitad)
+            {
+                combinacionesQueCumplen.Add(combinacion);
+            }
+        }
+    }
+
+    static void ImprimirResultados(List<string> combinacionesDelNumeroEnBinario, List<string> combinacionesQueCumplen)
+    {
+        foreach (string combinacion in combinacionesQueCumplen)
+        {
+            Console.Write($"{combinacion} ");
+        }
+    }
+
+    static int CalcularSumatoriaDeLaMitadDeUnBinario(string mitadDelBinario)
+    {
+        int sumatoria = 0;
+        foreach (char c in mitadDelBinario)
+        {
+            sumatoria += (c == '0') ? 0 : 1;
+        }
+
+        return sumatoria;
+    }
+}
+
+
+
+
+<- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - - - - >
+
+2. Dado un arreglo de tamaño n, genere e imprima todas las
+combinaciones posibles de r elementos en el arreglo. Por ejemplo, si
+la matriz de entrada es {1, 2, 3, 4} y r es 2, entonces la salida debe
+ser {1, 2}, {1, 3}, {1, 4}, {2, 3}, { 2, 4} y {3, 4}.
+Caso 1
+Entrada: [1,2,3,4] r = 2
+Salida: [1,2] [1,3] [1,4] [2,3] [2,4] [3,4]
+
+R// 
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int[] entrada = { 1, 2, 3, 4 };
+        int r = 2;
+        List<int> actual = new List<int>();
+        GenerarCombinaciones(entrada, r, actual, 0);
+    }
+
+    static void GenerarCombinaciones(int[] arr, int r, List<int> actual, int index)
+    {
+        if (r == 0)
+        {
+            Console.WriteLine("[" + string.Join(", ", actual) + "]");
+            return;
+        }
+
+        if (index >= arr.Length)
+        {
+            return;
+        }
+
+        // Incluir el elemento actual en la combinación.
+        List<int> nuevaCombinacion = new List<int>(actual);
+        nuevaCombinacion.Add(arr[index]);
+        GenerarCombinaciones(arr, r - 1, nuevaCombinacion, index + 1);
+
+        // Excluir el elemento actual de la combinación.
+        GenerarCombinaciones(arr, r, actual, index + 1);
+    }
+}
+
+<- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -- - - - - - - - - - - >
+
+3. Dada una matriz de tamaño N x M, cree un algoritmo recursivo para
+es recorrer esta matriz.
+Caso 1
+Entrada: M[][] = (
+1 2 3
+4 5 6
+7 8 9
+)
+Salida: 1,2,3,4,5,6,7,8,9
+
+R//
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        int[,] matriz = {
+            { 1, 2, 3 },
+            { 4, 5, 6 },
+            { 7, 8, 9 }
+        };
+
+        RecorrerYMostrarMatriz(matriz, 0);
+    }
+
+    static void RecorrerYMostrarMatriz(int[,] matriz, int indice)
+    {
+        if (indice == matriz.Length)
+            return;
+
+        int fila = indice / matriz.GetLength(1);
+        int columna = indice % matriz.GetLength(1);
+
+        Console.Write(matriz[fila, columna] + ", ");
+
+        RecorrerYMostrarMatriz(matriz, indice + 1);
+    }
+}
