@@ -1,0 +1,182 @@
+TALLER ESTRUCTURAS DE DATOS
+
+DANIEL ALZATE ARIAS 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PUNTO 1 : Cree una función recursiva que reciba un entero y retorne cuantos digitos de este numero son multiplos de 2 y de 4 (RESTRICCION "IGNORE EL 0")
+
+Solucion: 
+
+Console.Write("Ingrese el número a validar: ");
+string numero = Console.ReadLine();
+int digitosMultiplosDe2y4 = 0;
+
+CalcularDigitosMultiplosDe2y4(0);
+
+void CalcularDigitosMultiplosDe2y4(int posicionDelDigito)
+{
+  int digitoAValidar = Convert.ToInt32(numero[posicionDelDigito].ToString());
+
+  if (digitoAValidar != 0 && digitoAValidar % 2 == 0 && digitoAValidar % 4 == 0)
+  {
+    digitosMultiplosDe2y4++;
+  }
+
+  if ((posicionDelDigito + 1) < (numero.Length))
+  {
+    CalcularDigitosMultiplosDe2y4(posicionDelDigito + 1);
+  }
+}
+
+Console.WriteLine($"La cantidad de digitos del número ingresado que son múltiplos de 2 y 4 fueron: {digitosMultiplosDe2y4} digito(s)");
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PUNTO 2: Cree una función NO recursiva que invierta solo la mitad de un string
+
+Solucion: 
+
+Console.Write("Ingrese la palabra a la cual se le va a inertir su mitad: ");
+string palabra = Console.ReadLine();
+string resultado = palabra.Substring(0, palabra.Length/2);
+ConstruirPalabra();
+string ConstruirPalabra()
+{
+  for (int i = palabra.Length - 1; i >= (palabra.Length / 2); i--)
+  {
+    resultado += palabra[i];
+  }
+
+  return resultado;
+}
+
+
+Console.WriteLine($"La palabra resultante fue: {resultado}");
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PUNTO 3: Cree una función recursiva que calcule la sumatoria de todos los numeros impares de una matriz cuadrada (Sumar n-1/2 en una matriz cuadrada)
+
+Solucion:
+
+const int cantidadFilasYColumnas = 3;
+
+int[][] matriz = new int[cantidadFilasYColumnas][]{
+  new int[cantidadFilasYColumnas]{ 13, 2, 4 },
+  new int[cantidadFilasYColumnas]{ 66, 5, 68 },
+  new int[cantidadFilasYColumnas]{ 71, 83, 19 }
+};
+
+int totalSumatoria = 0;
+
+Console.WriteLine("La matriz a validar es:");
+CalcularSumatoria(0, 0);
+
+void CalcularSumatoria(int posicionFila, int posicionColumna)
+{
+  int numeroAValidar = matriz[posicionFila][posicionColumna];
+
+  Console.Write($"[{numeroAValidar}]");
+
+  if (numeroAValidar % 2 != 0)
+  {
+    totalSumatoria += numeroAValidar;
+  }
+
+  if (posicionColumna + 1 < cantidadFilasYColumnas)
+  {
+    CalcularSumatoria(posicionFila, posicionColumna + 1);
+  }
+  else if (posicionFila + 1 < cantidadFilasYColumnas)
+  {
+    posicionColumna = 0;
+    Console.WriteLine();
+    CalcularSumatoria(posicionFila + 1, posicionColumna);
+  }
+}
+
+Console.WriteLine($"\n\nLa sumatoria de impares mas es: {totalSumatoria}");
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PUNTO 4: Cree una función recursiva que reciba una lista, un elemento y un indice y retorne si el elemento está en la lista dada y en el indice dado 
+
+Solucion:
+
+string[] lista = new string[]
+{
+  "A", "B", "C", "D"
+};
+
+Console.WriteLine("La lista a validar es: ");
+for (int i = 0; i < lista.Length - 1; i++)
+{
+  Console.Write($"{lista[i]}, ");
+}
+Console.Write($"{lista.Last()}");
+
+Console.Write("\n\nIngrese el elemento de la lista a validar: ");
+string elemento = Console.ReadLine();
+Console.Write("Ingrese el indice de la lista a validar: ");
+int indice = Convert.ToInt32(Console.ReadLine());
+
+int indiceActual = 0;
+bool elementoEstaEnElIndice = false;
+
+ValidarListaElementoEIndice(lista, elemento, indice);
+
+void ValidarListaElementoEIndice(string[] listaAValidar, string elementoAValidar, int indiceAValidar)
+{
+  if (!elementoEstaEnElIndice && indiceActual < lista.Length)
+  {
+    if (indiceActual == indiceAValidar - 1)
+    {
+      if (listaAValidar[indiceAValidar - 1].Equals(elementoAValidar))
+      {
+        elementoEstaEnElIndice = true;
+      }
+    }
+
+    indiceActual++;
+    ValidarListaElementoEIndice(listaAValidar, elementoAValidar, indiceAValidar);
+  }
+}
+
+if (elementoEstaEnElIndice)
+{
+  Console.WriteLine("\nEl elemento se encuentra en la lista y en el indice dado");
+}
+else
+{
+  Console.WriteLine("\nEl elemento no se encuentra en la lista o en el indice dado");
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PUNTO 5: Cree una función recursiva que reciba un string alfanumerico y que extraiga los dijitos del string y retorne el número formado por todos los digitos
+
+Solucion:
+
+Console.Write("Ingrese la palabara con números: ");
+string palabra = Console.ReadLine();
+string numeros = string.Empty;
+
+TraerNumerosDeString(0);
+
+void TraerNumerosDeString(int indice)
+{
+  int numero;
+
+  if (int.TryParse(palabra[indice].ToString(), out numero))
+  {
+    numeros += numero.ToString();
+  }
+
+  if ((indice + 1) < (palabra.Length))
+  {
+    TraerNumerosDeString(indice + 1);
+  }
+}
+
+Console.WriteLine($"\nEl número resultante fue: {numeros}");
