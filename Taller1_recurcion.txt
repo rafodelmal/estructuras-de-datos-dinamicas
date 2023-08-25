@@ -1,0 +1,63 @@
+Ejercicio #1
+Int multiplos_2_4 (int numero, int cont = 0):
+	if numero == 0:
+		return cont
+	end if
+	x = numero//10
+	if x%4 == 0 and x%2 == 0:
+		cont += 1
+		numero = numero
+	end if
+	multiplos_2_4(numero, cont)
+
+Ejercicio #2
+String invertir_string(string palabra):
+	mid = length(palabra)//2
+	first = palabra[:mitad]
+	second = palabra[mitad:]
+	invert = second[::-1]
+
+	return first+invert
+
+Ejercicio #3
+Int sumar_digitos_matriz(matriz, int i = o, int j = 0, int sum = 0):
+	if i < length(matriz):
+		return sum
+	end if
+	if matriz[i][j]%2 == :
+		sum += matriz[i][j]
+	end if
+	if j < length(matriz):
+		sumar_digitos_matriz(matriz, i, j+1, sum)
+	end if
+	else:
+		sumar_digitos_matriz(matriz, i+1, j, sum)
+	end else
+
+Ejercicio #4
+Bool posicion(List, int element, int pos, int i = 0)
+	if List.length == 0:
+		return False	
+	end if 
+	if 0 <= pos < list.length:
+		if list[i] = element
+			return True
+		end if
+		else:
+			position_list(list, element, pos, i + 1)
+	end if
+	else: 
+		return False
+	end else
+Ejercicio #5
+String encontrar_numero(string alfanumérico, int índex = 0, string resultado = ""):
+	if índex = length(alfanumérico):
+		x = resultado
+		return x
+	end if
+	if alfanumero[index].isdigit():
+		resultado += alfanumerico[index]
+	end if 
+	else:
+		x = encontrar_numero(string alfanumérico, index + 1, string resultado) 
+	end else
