@@ -12,80 +12,81 @@ Salida: 00000 0100 01001 01101 01010 01110 10001 10101 10010 10110 11011 11111
 
 SOLUCION:
 
-using System;
-using System.Collections.Generic;
+Console.Write("Ingrese el número n: ");
+string numero = Console.ReadLine();
+bool numeroEsImpar = Convert.ToInt32(numero) % 2 != 0;
 
-class Program
+List<string> combinacionesDelNumeroEnBinario = new List<string>();
+List<(string, string)> combinacionesQueCumplen = new List<(string, string)>();
+
+GenerarCombinacionesBinarias(Convert.ToInt32(numero), "");
+ObtenerCombinacionesQueCumplen();
+ImprimirResultados();
+
+void GenerarCombinacionesBinarias(int cantidadBinariosActual, string combinacionActual)
 {
-    static bool numeroEsImpar;
+  if (cantidadBinariosActual == 0)
+  {
+    combinacionesDelNumeroEnBinario.Add(combinacionActual);
+  }
+  else
+  {
+    GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "0");
+    GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "1");
+  }
+}
 
-    static void Main(string[] args)
+void ObtenerCombinacionesQueCumplen()
+{
+  for (int i = 0; i < combinacionesDelNumeroEnBinario.Count; i++)
+  {
+    int mitadNumero = Convert.ToInt32(numero) / 2;
+
+    string primeraMitadBinario = combinacionesDelNumeroEnBinario[i].Substring(0, mitadNumero);
+    string segundaMitadBinario = combinacionesDelNumeroEnBinario[i].Substring((numeroEsImpar) ? mitadNumero + 1 : mitadNumero); //Si el numero es impar entonces comienze la segunda mitad sera la mitad + 1, pero si es par comience desde la mitad común y corriente
+
+    int sumatoriaPrimeraMitad = CalcularSumatoriaDeLaMitadDeUnBinario(primeraMitadBinario);
+    int sumatoriaSegundaMitad = CalcularSumatoriaDeLaMitadDeUnBinario(segundaMitadBinario);
+
+    if (sumatoriaPrimeraMitad == sumatoriaSegundaMitad)
     {
-        Console.Write("Ingrese el número n: ");
-        string numero = Console.ReadLine();
-        long numeroLong = Convert.ToInt64(numero);
-        numeroEsImpar = numeroLong % 2 != 0;
+      if (combinacionesQueCumplen.Contains((primeraMitadBinario, segundaMitadBinario))) //Si la sumatoria cumple pero si esta combinacion ya se agrego antes, entonces no se vuelve a imprimir y continue con la siguiente combinacion a validar
+      {
+        continue;
+      }
 
-        List<string> combinacionesDelNumeroEnBinario = new List<string>();
-        List<string> combinacionesQueCumplen = new List<string>();
-
-        GenerarCombinacionesBinarias(numeroLong, "", combinacionesDelNumeroEnBinario);
-        ObtenerCombinacionesQueCumplen(combinacionesDelNumeroEnBinario, combinacionesQueCumplen);
-        ImprimirResultados(combinacionesDelNumeroEnBinario, combinacionesQueCumplen);
-
-        Console.ReadLine();
+      combinacionesQueCumplen.Add((primeraMitadBinario, segundaMitadBinario));
     }
+  }
+}
 
-    static void GenerarCombinacionesBinarias(long cantidadBinariosActual, string combinacionActual, List<string> combinaciones)
+void ImprimirResultados()
+{
+  for (int i = 0; i < combinacionesQueCumplen.Count; i++)
+  {
+    if (numeroEsImpar)
     {
-        if (cantidadBinariosActual == 0)
-        {
-            combinaciones.Add(combinacionActual);
-        }
-        else
-        {
-            GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "0", combinaciones);
-            GenerarCombinacionesBinarias(cantidadBinariosActual - 1, combinacionActual + "1", combinaciones);
-        }
+      Console.Write($"{combinacionesQueCumplen[i].Item1}0{combinacionesQueCumplen[i].Item2}");
+      Console.Write(" ");
+      Console.Write($"{combinacionesQueCumplen[i].Item1}1{combinacionesQueCumplen[i].Item2}");
     }
-
-    static void ObtenerCombinacionesQueCumplen(List<string> combinacionesDelNumeroEnBinario, List<string> combinacionesQueCumplen)
+    else
     {
-        foreach (string combinacion in combinacionesDelNumeroEnBinario)
-        {
-            int mitadNumero = combinacion.Length / 2;
-
-            string primeraMitadBinario = combinacion.Substring(0, mitadNumero);
-            string segundaMitadBinario = combinacion.Substring((numeroEsImpar) ? mitadNumero + 1 : mitadNumero);
-
-            int sumatoriaPrimeraMitad = CalcularSumatoriaDeLaMitadDeUnBinario(primeraMitadBinario);
-            int sumatoriaSegundaMitad = CalcularSumatoriaDeLaMitadDeUnBinario(segundaMitadBinario);
-
-            if (sumatoriaPrimeraMitad == sumatoriaSegundaMitad)
-            {
-                combinacionesQueCumplen.Add(combinacion);
-            }
-        }
+      Console.Write($"{combinacionesQueCumplen[i].Item1}{combinacionesQueCumplen[i].Item2}");
     }
+    Console.Write(" ");
+  }
+}
 
-    static void ImprimirResultados(List<string> combinacionesDelNumeroEnBinario, List<string> combinacionesQueCumplen)
-    {
-        foreach (string combinacion in combinacionesQueCumplen)
-        {
-            Console.Write($"{combinacion} ");
-        }
-    }
+int CalcularSumatoriaDeLaMitadDeUnBinario(string mitadDelBinario)
+{
+  int sumatoria = 0;
+  for (int i = 0; i < mitadDelBinario.Length; i++)
+  {
+    sumatoria += Convert.ToInt32(mitadDelBinario[i].ToString());
+  }
 
-    static int CalcularSumatoriaDeLaMitadDeUnBinario(string mitadDelBinario)
-    {
-        int sumatoria = 0;
-        foreach (char c in mitadDelBinario)
-        {
-            sumatoria += (c == '0') ? 0 : 1;
-        }
-
-        return sumatoria;
-    }
+  return sumatoria;
 }
 
 
