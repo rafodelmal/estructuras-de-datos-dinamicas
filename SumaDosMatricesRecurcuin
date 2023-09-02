@@ -1,0 +1,35 @@
+def sumar_matrices(matriz1, matriz2):
+    filas = len(matriz1)
+    columnas = len(matriz1[0])
+    
+    if len(matriz2) != filas or len(matriz2[0]) != columnas:
+        raise ValueError("Las matrices deben tener las mismas dimensiones")
+    
+    resultado = [[0] * columnas for _ in range(filas)]
+    
+    def suma_recursiva(i, j):
+        if i < filas:
+            if j < columnas:
+                resultado[i][j] = matriz1[i][j] + matriz2[i][j]
+                suma_recursiva(i, j + 1)
+            else:
+                suma_recursiva(i + 1, 0)
+    
+    suma_recursiva(0, 0)
+    return resultado
+
+matriz1 = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9]
+]
+
+matriz2 = [
+    [9, 8, 7],
+    [6, 5, 4],
+    [3, 2, 1]
+]
+
+resultado = sumar_matrices(matriz1, matriz2)
+for fila in resultado:
+    print(fila)
