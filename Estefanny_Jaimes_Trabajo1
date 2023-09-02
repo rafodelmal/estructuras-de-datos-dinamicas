@@ -1,0 +1,12 @@
+import sys
+def Obtener_maximo(a, b):
+    suma = a + b
+    Obtener_maximo = max(suma, sys.maxsize)
+    return Obtener_maximo
+
+
+c = 4
+d = 10
+
+resultado = Obtener_maximo(c, d)
+print("El resultado máximo es: ", resultado)
