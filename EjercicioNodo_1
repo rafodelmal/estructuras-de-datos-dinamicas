@@ -1,0 +1,17 @@
+Nodo agregando (Nodo lista, Nodo vi, Nodo anterior):
+	if (lista == null):
+		return vi
+	end if
+	if (vi.valor < lista.valor):
+		vi.proximo = lista
+		return vi
+	end if
+	if (vi.valor == lista.valor):
+		return lista
+	end if 
+	anterior = lista
+	if (vi.valor > lista.valor and vi.valor <lista.proximo):
+		vi.proximo = lista
+		return vi
+	end if
+End function
