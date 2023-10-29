@@ -1,4 +1,17 @@
-﻿using System;
+// EXAMEN NUMERO 4 ESTRUCTURAS DE DATOS DINAMICOS
+// "El enunciado del 4 parcial es hacerle una mejora o modificacion al programa que me enviaron como 3 parcial"
+// Contenido agregado a mi codigo:
+// Exam 4
+// Al codigo se le agregaron estas nuevas funciones:
+// - Se implemento el balanceo del arbol
+// - Se implemento el recorrido PostOrder Inverso
+// - Se implemento la opcion "Eliminar Nodo"
+// - Se Implemento la funcion para imprimir graficamente el arbol
+// - Se agregaron textualmente mejoras en el manejo de excepciones
+
+// #CODIGO ++++++++++++++++++++++++++++++++++++++++++++++++++++ =
+
+using System;
 using System.Xml.Linq;
 
 class Nodo
